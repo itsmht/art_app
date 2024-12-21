@@ -3,6 +3,22 @@
 
 @include('publicLayouts.head')
 
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: auto; /* Ensure height adjusts based on content */
+        overflow-y: auto; /* Enable vertical scrolling */
+    }
+
+    .contact-section {
+        padding: 50px;
+        max-width: 800px; /* Optional: Limit width for better readability */
+        margin: 0 auto; /* Center the form horizontally */
+    }
+</style>
+
 <body>
     @include('sweetalert::alert')
 
@@ -16,7 +32,7 @@
     @include('publicLayouts.navbar')
 
     <!-- Contact Us Section -->
-    <div class="contact-section" style="padding: 50px;">
+    <div class="contact-section">
         <h2>Contact Us</h2>
         <form action="{{ route('contactSubmit') }}" method="POST">
             @csrf
@@ -51,7 +67,7 @@
             </div>
 
             <!-- Submit Button -->
-            <button class="btn btn-danger buy-button" type="submit" class="btn btn-primary">Send Message</button>
+            <button class="btn btn-danger buy-button" type="submit">Send Message</button>
         </form>
     </div>
 
