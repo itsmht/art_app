@@ -40,9 +40,11 @@
                         src="{{ asset('product_images/' . $image->product_image_value) }}" 
                         alt="Thumbnail {{ $loop->index + 1 }}" 
                         onclick="changeImage('{{ asset('product_images/' . $image->product_image_value) }}')"
+                        style="cursor: pointer; width: 80px; height: 60px;" 
                     >
                 @endforeach
             </div>
+
         </div>
 
         <!-- Product Information Section -->
@@ -143,6 +145,13 @@
         }
     }
     </script>
+    <script>
+        function changeImage(newSrc) {
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = newSrc; // Update the main image's src with the clicked thumbnail's src
+        }
+        </script>
+        
 
 </body>
 </html>
