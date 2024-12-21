@@ -23,7 +23,7 @@
     @include('sweetalert::alert')
 
     <header>
-        <img src="C:\Users\iamta\Downloads\n-n-artistry-logo-zip-file\png\logo-no-background.png" alt="logo" class="logo">
+        <img src="C:\Users\iamta\Downloads\n-n-artistry-logo-zip-file\png\logo-no-background.png" alt="logo" class="logo"><br>
         <h1>Welcome to NN Artistry</h1>
         <p>Get in touch with us</p>
     </header>

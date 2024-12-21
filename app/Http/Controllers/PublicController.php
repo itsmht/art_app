@@ -10,6 +10,7 @@ use App\Models\ProductImage;
 use App\Models\Setting;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use App\Http\Controllers\SMSController;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
@@ -68,6 +69,9 @@ class PublicController extends Controller
             $purchase->save();
             $product->product_stock = $product->product_stock - 1;
             $product->save();
+            $sms = new SMSController();
+            $message = "Your order ID is ".$unique_id.". Please store this ID for future reference.";
+            $sms->sms_send($req->purchase_phone,$message);
             Alert::success('Successfull', 'Purchase Request Sent. Please Wait For Our Call!');
             return back();
         }
@@ -115,5 +119,28 @@ class PublicController extends Controller
         $contact->save();
         Alert::success('Successfull', 'Message Sent Successfully!');
         return back();
+    }
+    public function trackOrder(Request $request)
+    {
+        $phone = $request->input('purchase_phone');
+        $uniqueId = $request->input('purchase_unique_id');
+
+        // Example: Find the order in the database using both phone and unique ID
+        $order = Purchase::where('purchase_phone', $phone)->where('purchase_unique_id', $uniqueId)->first();
+
+        if ($order) 
+        {
+            return response()->json([
+                'success' => true,
+                'status' => $order->purchase_status
+            ]);
+        } 
+        else 
+        {
+                return response()->json([
+                'success' => false,
+                'message' => 'No order found with the provided details. Please check your inputs.'
+            ]);
+        }
     }
 }
