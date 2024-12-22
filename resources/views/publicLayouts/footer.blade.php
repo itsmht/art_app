@@ -26,8 +26,8 @@
 
         <div class="footer-visitors">
             <h4>Website Statistics</h4>
-            <p><strong>Total Visitors:</strong> <span id="totalVisitors" class="count-container">0</span></p>
-            <p><strong>Currently Active:</strong> <span id="activeVisitors" class="count-container">0</span></p>
+            <p><strong>Total Visitors:</strong> <span id="totalVisitors" class="count-container" style="color:#e94560">0</span></p>
+            <p><strong>Currently Active:</strong> <span id="activeVisitors" class="count-container" style="color:#e94560">0</span></p>
         </div>
     </div>
 
