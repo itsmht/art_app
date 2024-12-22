@@ -8,6 +8,8 @@ use Illuminate\View\Engines\CompilerEngine;
 use Illuminate\View\Engines\EngineResolver;
 use Illuminate\View\Engines\FileEngine;
 use Illuminate\View\Engines\PhpEngine;
+use Illuminate\Support\Facades\DB;
+use Cache;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -168,6 +170,20 @@ class ViewServiceProvider extends ServiceProvider
             });
 
             return $compiler;
+        });
+    }
+    public function boot()
+    {
+        view()->composer('*', function ($view) {
+            $totalVisitors = DB::table('visitor_counts')->count();
+
+            // Count active visitors using file-based cache
+            $activeVisitors = collect(Cache::getStore()->getDirectory())->filter(function ($file) {
+                return str_contains($file, 'active_visitor:');
+            })->count();
+
+            $view->with('totalVisitors', $totalVisitors)
+                 ->with('activeVisitors', $activeVisitors);
         });
     }
 }

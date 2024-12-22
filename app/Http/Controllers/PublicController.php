@@ -22,8 +22,11 @@ class PublicController extends Controller
     function home()
     {
         $totalVisitors = DB::table('visitor_counts')->count();
-        $keys = Cache::getRedis()->keys('active_visitor:*');
-        $activeVisitors = count($keys);
+        //$keys = Cache::getStore()->keys('active_visitor:*');
+        $cacheFiles = collect(Cache::getStore()->getDirectory())->filter(function ($file) {
+            return str_contains($file, 'active_visitor:');
+        });
+        $activeVisitors = count($cacheFiles);
         $setting = Setting::first();
         $categories = Category::all();
         $products = Product::with('product_images')->paginate(10);
@@ -32,9 +35,15 @@ class PublicController extends Controller
     function productDetails(Request $req)
     {
         $setting = Setting::first();
+        $totalVisitors = DB::table('visitor_counts')->count();
+        //$keys = Cache::getStore()->keys('active_visitor:*');
+        $cacheFiles = collect(Cache::getStore()->getDirectory())->filter(function ($file) {
+            return str_contains($file, 'active_visitor:');
+        });
+        $activeVisitors = count($cacheFiles);
         $categories = Category::all();
         $product = Product::where('product_id', $req->iden)->with('product_images')->first();
-        return view('public.productDetails')->with('setting', $setting)->with('categories', $categories)->with('product', $product);
+        return view('public.productDetails')->with('setting', $setting)->with('categories', $categories)->with('product', $product)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
     }
     function purchaseSubmit(Request $req)
     {
@@ -87,8 +96,11 @@ class PublicController extends Controller
     function filter(Request $req)
     {
         $totalVisitors = DB::table('visitor_counts')->count();
-        $keys = Cache::getRedis()->keys('active_visitor:*');
-        $activeVisitors = count($keys);
+        //$keys = Cache::getStore()->keys('active_visitor:*');
+        $cacheFiles = collect(Cache::getStore()->getDirectory())->filter(function ($file) {
+            return str_contains($file, 'active_visitor:');
+        });
+        $activeVisitors = count($cacheFiles);
         $setting = Setting::first();
         $categories = Category::all();
         $category = Category::where('category_id', $req->iden)->first();
@@ -98,8 +110,11 @@ class PublicController extends Controller
     function about()
     {
         $totalVisitors = DB::table('visitor_counts')->count();
-        $keys = Cache::getRedis()->keys('active_visitor:*');
-        $activeVisitors = count($keys);
+        //$keys = Cache::getStore()->keys('active_visitor:*');
+        $cacheFiles = collect(Cache::getStore()->getDirectory())->filter(function ($file) {
+            return str_contains($file, 'active_visitor:');
+        });
+        $activeVisitors = count($cacheFiles);
         $setting = Setting::first();
         $categories = Category::all();
         return view('public.about')->with('setting', $setting)->with('categories', $categories)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
@@ -107,8 +122,11 @@ class PublicController extends Controller
     function contact()
     {
         $totalVisitors = DB::table('visitor_counts')->count();
-        $keys = Cache::getRedis()->keys('active_visitor:*');
-        $activeVisitors = count($keys);
+        //$keys = Cache::getStore()->keys('active_visitor:*');
+        $cacheFiles = collect(Cache::getStore()->getDirectory())->filter(function ($file) {
+            return str_contains($file, 'active_visitor:');
+        });
+        $activeVisitors = count($cacheFiles);
         $setting = Setting::first();
         $categories = Category::all();
         return view('public.contact')->with('setting', $setting)->with('categories', $categories)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
