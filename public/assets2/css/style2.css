@@ -1,178 +1,127 @@
-/* General Reset */
-* {
+:root {
+    --rotate-speed: 40;
+    --count: 8; /* Set this to dynamically change count */
+    --easeInOutSine: cubic-bezier(0.37, 0, 0.63, 1);
+    --easing: cubic-bezier(0.000, 0.37, 1.000, 0.63);
+}
+
+/* Container for the carousel */
+.void {
+    width: 100%;
+    max-width: 1024px;
+    margin: auto;
+    position: relative;
+    aspect-ratio: 1 / 1;
+}
+
+/* Animate the card rotation */
+ul {
+    list-style-type: none;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    line-height: 1.6;
-}
-
-/* Hero Section */
-.hero {
-    background-color: #2a2a2a;
-    color: white;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 0 20px;
-}
-
-.hero-content img {
-    max-width: 150px;
-    margin-bottom: 20px;
-}
-
-.hero-content h1 {
-    font-size: 3rem;
-    margin-bottom: 10px;
-    animation: fadeIn 1s ease-out;
-}
-
-.hero-content p {
-    font-size: 1.2rem;
-    opacity: 0.8;
-    margin-bottom: 20px;
-    animation: fadeIn 1.2s ease-out;
-}
-
-.hero-content .btn {
-    background-color: #ff7f50;
-    color: white;
-    padding: 15px 30px;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.hero-content .btn:hover {
-    background-color: #e16d3a;
-}
-
-/* Gallery Section */
-.gallery {
-    padding: 60px 20px;
-}
-
-.swiper-container {
+    position: relative;
     width: 100%;
-    height: 100%;
+    aspect-ratio: 1 / 1;
+    z-index: 1;
 }
 
-.art-item {
-    text-align: center;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+li {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    animation: rotateCW calc(var(--rotate-speed) * 1s) var(--easing) infinite;
 }
 
-.art-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+.card {
+    width: 27%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 24px;
+    gap: 8px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1), 0px 16px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-size: 14px;
+    color: #535062;
+    animation: rotateCCW calc(var(--rotate-speed) * 1s) var(--easing) infinite;
 }
 
-.art-image {
-    max-width: 100%;
+/* Product image styling */
+.product-img {
+    width: 100%;
     height: auto;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
+    border-radius: 8px;
+    object-fit: cover;
 }
 
-.art-item:hover .art-image {
-    transform: scale(1.05);
+/* Product Name Styling */
+.model-name {
+    font-weight: 500;
+    font-size: 18px;
+    color: #3B2ED0;
 }
 
-h3 {
-    margin-top: 10px;
-    font-size: 1.4rem;
+/* Product description styling */
+.product-description {
+    font-size: 12px;
+    color: #777;
 }
 
-p {
-    margin-top: 5px;
-    font-size: 1.2rem;
-    opacity: 0.7;
-}
-
-.buy-button {
-    margin-top: 10px;
-    background-color: #ff7f50;
+/* Button Styling */
+.buy-now {
+    background-color: #e74c3c;
+    padding: 8px 16px;
     color: white;
-    padding: 10px 20px;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.buy-button:hover {
-    background-color: #e16d3a;
-}
-
-/* View More Button */
-.view-more-container {
     text-align: center;
-    margin-top: 20px;
+    cursor: pointer;
+    font-weight: 600;
 }
 
-.view-more-btn {
-    background-color: #333;
-    color: white;
-    padding: 15px 30px;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-.view-more-btn:hover {
-    background-color: #555;
-}
-
-/* Swiper Navigation */
-.swiper-button-next,
-.swiper-button-prev {
-    color: #ff7f50;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    padding: 40px 20px;
-    background-color: #333;
-    color: white;
-}
-
-footer p {
-    font-size: 1rem;
-    opacity: 0.8;
-}
-
-@keyframes fadeIn {
+/* Animation for rotating the cards */
+@keyframes rotateCW {
     from {
-        opacity: 0;
+        transform: translate3d(0px, -50%, -1px) rotate(-45deg);
     }
     to {
-        opacity: 1;
+        transform: translate3d(0px, -50%, 0px) rotate(-315deg);
     }
 }
 
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-    .hero-content h1 {
-        font-size: 2.5rem;
+@keyframes rotateCCW {
+    from {
+        transform: rotate(45deg);
     }
+    to {
+        transform: rotate(315deg);
+    }
+}
 
-    .hero-content p {
-        font-size: 1rem;
-    }
+/* Circular effects */
+.second-circle, .last-circle {
+    position: absolute;
+    width: 40%;
+    aspect-ratio: 1 / 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #F5F4FE;
+    opacity: 0.5;
+    box-shadow: 0px 18px 36px -18px rgba(12, 5, 46, 0.3), 0px 30px 60px -12px rgba(12, 5, 46, 0.25);
+    border-radius: 50%;
+}
 
-    .swiper-button-next,
-    .swiper-button-prev {
-        font-size: 20px;
-    }
+/* Mask for visual effect */
+.mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 50%;
+    animation: pulseGlow 5s linear infinite alternate;
+    background-position: 100% 50%;
+    background-repeat: no-repeat;
+    background-image: radial-gradient(100% 50% at 100% 50%, rgba(60, 26, 229, 0.25) 0%, rgba(60, 26, 229, 0.247904) 11.79%, rgba(59, 26, 229, 0.241896) 21.38%, rgba(58, 26, 229, 0.2324) 29.12%, rgba(57, 26, 229, 0.219837) 35.34%, rgba(55, 26, 229, 0.20463) 40.37%, rgba(53, 26, 229, 0.1872) 44.56%, rgba(51, 26, 229, 0.16797) 48.24%, rgba(48, 26, 229, 0.147363) 51.76%, rgba(46, 26, 229, 0.1258) 55.44%, rgba(44, 26, 229, 0.103704) 59.63%, rgba(41, 26, 229, 0.0814963) 64.66%, rgba(39, 26, 229, 0.0596) 70.88%, rgba(36, 26, 229, 0.038437) 78.62%, rgba(34, 26, 229, 0.0184296) 88.21%, rgba(32, 26, 229, 0) 100%);
 }
