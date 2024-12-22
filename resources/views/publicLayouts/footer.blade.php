@@ -17,7 +17,7 @@
         <!-- Social Media Links -->
         <div class="footer-social">
             <h4>Follow Us</h4>
-            <ul>
+            <ul style="list-style-type: none; padding: 0; margin: 0;">
                 <li><a href="https://www.facebook.com/nnartistry.world" target="_blank">Facebook</a></li>
                 <li><a href="https://www.instagram.com/nnartistry/" target="_blank">Instagram</a></li>
                 <li><a href="https://twitter.com/nnartistry/" target="_blank">Twitter</a></li>
