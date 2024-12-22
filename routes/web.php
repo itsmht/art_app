@@ -24,14 +24,16 @@ Route::get('/cron', function () {
 });
 
 // Public Routes
-Route::get('/', [PublicController::class, 'home'])->name('home');
-Route::get('productDetails', [PublicController::class, 'productDetails'])->name('productDetails');
-Route::get('filter', [PublicController::class, 'filter'])->name('filter');
-Route::get('about', [PublicController::class, 'about'])->name('about');
-Route::get('contact', [PublicController::class, 'contact'])->name('contact');
-Route::post('contactSubmit', [PublicController::class, 'contactSubmit'])->name('contactSubmit');
-Route::post('/purchase.submit', [PublicController::class, 'purchaseSubmit'])->name('purchase.submit');
-Route::post('/track-order', [PublicController::class, 'trackOrder'])->name('trackOrder');
+Route::group(['middleware' => ['track']], function () {
+    Route::get('/', [PublicController::class, 'home'])->name('home');
+    Route::get('productDetails', [PublicController::class, 'productDetails'])->name('productDetails');
+    Route::get('filter', [PublicController::class, 'filter'])->name('filter');
+    Route::get('about', [PublicController::class, 'about'])->name('about');
+    Route::get('contact', [PublicController::class, 'contact'])->name('contact');
+    Route::post('contactSubmit', [PublicController::class, 'contactSubmit'])->name('contactSubmit');
+    Route::post('/purchase.submit', [PublicController::class, 'purchaseSubmit'])->name('purchase.submit');
+    Route::post('/track-order', [PublicController::class, 'trackOrder'])->name('trackOrder');
+});
 
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('/login.submit', [AuthController::class, 'loginSubmit'])->name('login.submit');
