@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'd198d1cf5b3498a00844eb8a45002a09074dadc3',
+        'reference' => 'e0c34a1287b011a64cad3ffbb61d1d893ac98207',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -379,7 +379,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'd198d1cf5b3498a00844eb8a45002a09074dadc3',
+            'reference' => 'e0c34a1287b011a64cad3ffbb61d1d893ac98207',
             'dev_requirement' => false,
         ),
         'laravel/pint' => array(
@@ -639,6 +639,15 @@
             'aliases' => array(),
             'reference' => 'f3d767f7f9e191eab4189abe41ab37797e30b1be',
             'dev_requirement' => true,
+        ),
+        'predis/predis' => array(
+            'pretty_version' => 'v2.3.0',
+            'version' => '2.3.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../predis/predis',
+            'aliases' => array(),
+            'reference' => 'bac46bfdb78cd6e9c7926c697012aae740cb9ec9',
+            'dev_requirement' => false,
         ),
         'psr/clock' => array(
             'pretty_version' => '1.0.0',
