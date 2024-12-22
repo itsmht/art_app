@@ -14,15 +14,20 @@ use App\Http\Controllers\SMSController;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Cache;
 
 class PublicController extends Controller
 {
     function home()
     {
+        $totalVisitors = DB::table('visitor_counts')->count();
+        $keys = Cache::getRedis()->keys('active_visitor:*');
+        $activeVisitors = count($keys);
         $setting = Setting::first();
         $categories = Category::all();
         $products = Product::with('product_images')->paginate(10);
-        return view('public.home')->with('setting', $setting)->with('categories', $categories)->with('products', $products);
+        return view('public.home')->with('setting', $setting)->with('categories', $categories)->with('products', $products)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
     }
     function productDetails(Request $req)
     {
@@ -81,23 +86,32 @@ class PublicController extends Controller
     }
     function filter(Request $req)
     {
+        $totalVisitors = DB::table('visitor_counts')->count();
+        $keys = Cache::getRedis()->keys('active_visitor:*');
+        $activeVisitors = count($keys);
         $setting = Setting::first();
         $categories = Category::all();
         $category = Category::where('category_id', $req->iden)->first();
         $products = Product::where('category_id', $req->iden)->with('product_images')->paginate(10);
-        return view('public.filter')->with('setting', $setting)->with('categories', $categories)->with('category', $category)->with('products', $products);
+        return view('public.filter')->with('setting', $setting)->with('categories', $categories)->with('products', $products)->with('category', $category)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
     }
     function about()
     {
+        $totalVisitors = DB::table('visitor_counts')->count();
+        $keys = Cache::getRedis()->keys('active_visitor:*');
+        $activeVisitors = count($keys);
         $setting = Setting::first();
         $categories = Category::all();
-        return view('public.about')->with('setting', $setting)->with('categories', $categories);
+        return view('public.about')->with('setting', $setting)->with('categories', $categories)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
     }
     function contact()
     {
+        $totalVisitors = DB::table('visitor_counts')->count();
+        $keys = Cache::getRedis()->keys('active_visitor:*');
+        $activeVisitors = count($keys);
         $setting = Setting::first();
         $categories = Category::all();
-        return view('public.contact')->with('setting', $setting)->with('categories', $categories);
+        return view('public.contact')->with('setting', $setting)->with('categories', $categories)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
     }
     function contactSubmit(Request $req)
     {

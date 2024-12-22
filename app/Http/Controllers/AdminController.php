@@ -11,6 +11,8 @@ use App\Models\Setting;
 use App\Models\Log;
 use App\Models\User;
 use File;
+use Illuminate\Support\Facades\DB;
+use Cache;
 use Datetime;
 use Carbon\Carbon;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -18,8 +20,12 @@ use RealRashid\SweetAlert\Facades\Alert;
 class AdminController extends Controller
 {
     function dashboard()
-    {   $user = User::where('email',session()->get('logged'))->first();
-        return view('admin.dashboard')->with('user', $user);
+    {
+        $totalVisitors = DB::table('visitor_counts')->count();
+        $keys = Cache::getRedis()->keys('active_visitor:*');
+        $activeVisitors = count($keys);
+        $user = User::where('email',session()->get('logged'))->first();
+        return view('admin.dashboard')->with('user', $user)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
     }
     function categories()
     {

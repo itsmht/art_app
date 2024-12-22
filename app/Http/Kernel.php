@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'prevent.back' => \App\Http\Middleware\PreventBack::class,
         'auth.guest' => \App\Http\Middleware\AuthGuest::class,
         'type' => \App\Http\Middleware\CheckUserType::class,
+        'track'=> \App\Http\Middleware\TrackVisitor::class,
     ];
 }
