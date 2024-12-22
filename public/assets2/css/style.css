@@ -437,3 +437,49 @@
         .contact-section button :hover {
             background-color: #d73754;
         }
+        .count-container {
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            height: 1.2em; /* Adjust to your font size */
+        }
+    
+        .count-slide {
+            position: absolute;
+            width: 100%;
+            text-align: left;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+    
+        .count-slide.show {
+            transform: translateY(0%);
+        }
+    
+        .count-slide.hide {
+            transform: translateY(-100%);
+        }
+        .footer-visitors {
+            position: relative;
+        }
+    
+        #totalVisitors,
+        #activeVisitors {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            height: 1.5em; /* Match the font size */
+            line-height: 1.5em;
+            vertical-align: middle;
+            color: #e94560; /* Apply the text color */
+            font-weight: bold; /* Optional: Make the numbers stand out */
+            font-size: 1.2em; /* Optional: Adjust size for visibility */
+        }
+    
+        .slide-new {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            color: #e94560; /* Ensure the sliding element matches the color */
+        }
+    

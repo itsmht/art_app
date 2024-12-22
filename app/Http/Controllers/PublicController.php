@@ -19,19 +19,19 @@ use Cache;
 
 class PublicController extends Controller
 {
-    function home()
-    {
-        $totalVisitors = DB::table('visitor_counts')->count();
-        //$keys = Cache::getStore()->keys('active_visitor:*');
-        $cacheFiles = collect(Cache::getStore()->getDirectory())->filter(function ($file) {
-            return str_contains($file, 'active_visitor:');
-        });
-        $activeVisitors = count($cacheFiles);
-        $setting = Setting::first();
-        $categories = Category::all();
-        $products = Product::with('product_images')->paginate(10);
-        return view('public.home')->with('setting', $setting)->with('categories', $categories)->with('products', $products)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
-    }
+     function home()
+     {
+         $totalVisitors = DB::table('visitor_counts')->count();
+         $active = DB::table('visitor_counts')
+                        ->where('updated_at', '>=', Carbon::now()->subMinutes(5))
+                        ->count();
+         $setting = Setting::first();
+         $categories = Category::all();
+         $products = Product::with('product_images')->paginate(10);
+         return view('public.home')->with('setting', $setting)->with('categories', $categories)->with('products', $products);
+     }
+    
+
     function productDetails(Request $req)
     {
         $setting = Setting::first();
@@ -174,5 +174,20 @@ class PublicController extends Controller
                 'message' => 'No order found with the provided details. Please check your inputs.'
             ]);
         }
+    }
+    public function getVisitorCounts()
+    {
+        $totalVisitors = DB::table('visitor_counts')->count();
+    
+        // Count active visitors (those updated within the last 5 minutes)
+        $active = DB::table('visitor_counts')
+            ->where('updated_at', '>=', now()->subMinutes(5))
+            ->count();
+    
+        // Return the counts as JSON
+        return response()->json([
+            'totalVisitors' => $totalVisitors,
+            'active' => $active,
+        ]);
     }
 }

@@ -34,6 +34,7 @@ Route::group(['middleware' => ['track']], function () {
     Route::post('/purchase.submit', [PublicController::class, 'purchaseSubmit'])->name('purchase.submit');
     Route::post('/track-order', [PublicController::class, 'trackOrder'])->name('trackOrder');
 });
+Route::get('/visitor-counts', [PublicController::class, 'getVisitorCounts'])->name('visitor.counts');
 
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('/login.submit', [AuthController::class, 'loginSubmit'])->name('login.submit');
