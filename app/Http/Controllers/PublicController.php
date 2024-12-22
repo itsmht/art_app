@@ -27,7 +27,7 @@ class PublicController extends Controller
                         ->count();
          $setting = Setting::first();
          $categories = Category::all();
-         $products = Product::with('product_images')->paginate(10);
+         $products = Product::with('product_images')->paginate(9);
          return view('public.home')->with('setting', $setting)->with('categories', $categories)->with('products', $products);
      }
     
@@ -178,12 +178,12 @@ class PublicController extends Controller
     public function getVisitorCounts()
     {
         $totalVisitors = DB::table('visitor_counts')->count();
-    
+
         // Count active visitors (those updated within the last 5 minutes)
         $active = DB::table('visitor_counts')
             ->where('updated_at', '>=', now()->subMinutes(5))
             ->count();
-    
+
         // Return the counts as JSON
         return response()->json([
             'totalVisitors' => $totalVisitors,
