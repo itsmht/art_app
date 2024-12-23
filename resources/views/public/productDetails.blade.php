@@ -213,7 +213,7 @@
                                 <input type="radio" id="bkash" name="payment_method" value="Bkash" onclick="toggleBkashField(true)">
                                 <label for="bkash">Bkash Send Money</label>
                                 <p id="bkash-note" style="display: none; margin-top: 5px; color: #555;">
-                                    Please send money to <strong>{{$setting->bkash}}</strong>.
+                                    Please use the "Send Money" option in Bkash and transfer the total price to <strong>{{$setting->bkash}}</strong>  first. And then input the Bkash phone number below.
                                 </p>
                             </div>
                         </div>
