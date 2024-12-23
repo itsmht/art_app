@@ -34,7 +34,7 @@
     <!-- ============================================================== -->
     <div class="splash-container">
         <div class="card ">
-            <div class="card-header text-center"><a href="../index.html"><img class="logo-img" src="../assets/images/quirky.png" alt="logo" style="height:70px;"></a><span class="splash-description">Please enter your user information.</span></div>
+            <div class="card-header text-center"><a href="{{route('home')}}"><img class="logo-img" src="../assets/images/nnn.png" alt="logo" style="height:70px;"></a><span class="splash-description">Please enter your user information.</span></div>
             @if (\Session::has('message'))
                     <div class="alert alert-danger">
                         {{\Session::get('message')}}
