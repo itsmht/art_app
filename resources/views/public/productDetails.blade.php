@@ -7,8 +7,8 @@
         margin: 0;
         padding: 0;
         font-family: 'Arial', sans-serif;
-        overflow-y: auto; /* Allow vertical scrolling */
-        height: auto; /* Ensure it adjusts based on content height */
+        overflow-y: auto;
+        height: auto;
     }
 
     header {
@@ -97,8 +97,6 @@
         font-weight: bold;
         color: #007bff;
     }
-
-    
 
     @media (max-width: 768px) {
         header h1 {
@@ -236,6 +234,11 @@
 
     <script>
         function toggleBkashField(show) {
+            // Toggle the note visibility
+            const bkashNote = document.getElementById('bkash-note');
+            bkashNote.style.display = show ? 'block' : 'none';
+
+            // Toggle the input field visibility
             const bkashField = document.getElementById('bkashField');
             bkashField.style.display = show ? 'block' : 'none';
         }
@@ -243,12 +246,6 @@
         function changeImage(newSrc) {
             const mainImage = document.getElementById('mainImage');
             mainImage.src = newSrc;
-        }
-    </script>
-    <script>
-        function toggleBkashField(show) {
-            const bkashNote = document.getElementById('bkash-note');
-            bkashNote.style.display = show ? 'block' : 'none';
         }
     </script>
 </body>
