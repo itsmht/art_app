@@ -20,7 +20,7 @@
         <div class="art-item">
             <img src="{{ asset('product_images/' . $product->product_images->first()->product_image_value) }}" alt="Product Image" style="width: 250px; height: 200px;">
             <h3>{{$product->product_name}}</h3>
-            <p>Price: ৳{{$product->product_discounted_price + $product->delivery_charge}}</p>
+            <p>Price: ৳{{$product->product_discounted_price}}</p>
             <a href="{{route('productDetails',['iden'=>$product->product_id, 'distinct_name'=>$product->product_name])}}" class="btn btn-danger buy-button">Buy</a>
         </div> 
         @endforeach

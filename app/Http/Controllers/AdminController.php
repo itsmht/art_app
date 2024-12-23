@@ -21,11 +21,8 @@ class AdminController extends Controller
 {
     function dashboard()
     {
-        $totalVisitors = DB::table('visitor_counts')->count();
-        $keys = Cache::getRedis()->keys('active_visitor:*');
-        $activeVisitors = count($keys);
         $user = User::where('email',session()->get('logged'))->first();
-        return view('admin.dashboard')->with('user', $user)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
+        return view('admin.dashboard')->with('user', $user);
     }
     function categories()
     {

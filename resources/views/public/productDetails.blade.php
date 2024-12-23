@@ -187,7 +187,7 @@
                 <div class="modal-body">
                     <form id="purchaseForm" action="{{ route('purchase.submit') }}" method="POST">
                         @csrf
-
+                        
                         <div class="mb-3">
                             <label for="purchase_name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="purchase_name" name="purchase_name" required>
@@ -214,6 +214,9 @@
                             <div>
                                 <input type="radio" id="bkash" name="payment_method" value="Bkash" onclick="toggleBkashField(true)">
                                 <label for="bkash">Bkash Send Money</label>
+                                <p id="bkash-note" style="display: none; margin-top: 5px; color: #555;">
+                                    Please send money to <strong>{{$setting->bkash}}</strong>.
+                                </p>
                             </div>
                         </div>
 
@@ -240,6 +243,12 @@
         function changeImage(newSrc) {
             const mainImage = document.getElementById('mainImage');
             mainImage.src = newSrc;
+        }
+    </script>
+    <script>
+        function toggleBkashField(show) {
+            const bkashNote = document.getElementById('bkash-note');
+            bkashNote.style.display = show ? 'block' : 'none';
         }
     </script>
 </body>
