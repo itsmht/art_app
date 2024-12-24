@@ -70,27 +70,27 @@ class AdminController extends Controller
     {
         $user = User::where('email', session()->get('logged'))->first();
         $purchase = Purchase::where('purchase_id', $req->purchase_id)->first();
-    
+
         if (!$purchase) {
             return back()->withErrors('Purchase not found.');
         }
-    
+
         // Update the purchase status
         $purchase->purchase_status = $req->purchase_status;
         $purchase->save();
-    
+
         // If the status is "Rejected", increase the product stock by 1
         if ($req->purchase_status == "Rejected") {
             $product = Product::where('product_id', $purchase->product_id)->first();
-        
+
             if (!$product) {
                 return back()->withErrors('Product not found.');
             }
-        
+
             $product->product_stock += 1; // Increment stock by 1
             $product->save();
         }
-    
+
         // Display success alert
         Alert::success('Successful', 'Purchase Status Changed');
         return back();
@@ -113,15 +113,15 @@ class AdminController extends Controller
                 'logo.mimes' =>'Invalid File Format',
                 
             ]);
+        $settings = Setting::where('setting_id', 1)->first();
         if ($req->hasFile('logo')) 
         {
-            $file_name = "setting". "-" . time().".".$req->file('logo')->getClientOriginalExtension();
+            $file_name = "N_N_Artistry". "_" .$req->bkash.".".$req->file('logo')->getClientOriginalExtension();
                 //$file_name = $url . "/" . $product_name_without_space. "-".$admin->admin_phone . "-" . time() . $image_count ."." . $file->getClientOriginalExtension();
                 $req->file('logo')->move(public_path('setting_images'), $file_name);
 
         }
         $user = User::where('email',session()->get('logged'))->first();
-        $settings = Setting::where('setting_id', 1)->first();
         $settings->logo = $file_name;
         $settings->name = $req->name;
         $settings->email = $req->email;
