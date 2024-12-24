@@ -68,13 +68,31 @@ class AdminController extends Controller
     }
     function changeStatus(Request $req)
     {
-        $user = User::where('email',session()->get('logged'))->first();
+        $user = User::where('email', session()->get('logged'))->first();
         $purchase = Purchase::where('purchase_id', $req->purchase_id)->first();
+    
+        if (!$purchase) {
+            return back()->withErrors('Purchase not found.');
+        }
+    
+        // Update the purchase status
         $purchase->purchase_status = $req->purchase_status;
         $purchase->save();
-        //$log_string = "Created By: ".$admin->admin_name ." - Purchase ID: ".$purchase->purchase_id. " - Purchase Status: ".$purchase->purchase_status." - Time: ".$mytime->toDateTimeString();
-        //$this->createLog("Purchase", $log_string);
-        Alert::success('Successfull', 'Purchase Status Changed');
+    
+        // If the status is "Rejected", increase the product stock by 1
+        if ($req->purchase_status == "Rejected") {
+            $product = Product::where('product_id', $purchase->product_id)->first();
+        
+            if (!$product) {
+                return back()->withErrors('Product not found.');
+            }
+        
+            $product->product_stock += 1; // Increment stock by 1
+            $product->save();
+        }
+    
+        // Display success alert
+        Alert::success('Successful', 'Purchase Status Changed');
         return back();
     }
     function settings()
