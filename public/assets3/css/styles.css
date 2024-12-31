@@ -518,6 +518,7 @@ footer p {
     }
 }
 /* Products Section */
+/* Products Section */
 .products {
     padding: 2rem;
     background-color: #fff;
@@ -526,12 +527,15 @@ footer p {
 .container {
     display: flex;
     justify-content: space-between;
+    gap: 2rem; /* Space between sections */
+    flex-wrap: wrap; /* Allow sections to wrap on smaller screens */
 }
 
 .filter-section {
     width: 25%;
     padding: 1rem;
     border-right: 2px solid #ddd;
+    box-sizing: border-box; /* Ensure padding is included in width calculation */
 }
 
 .filter-section h3 {
@@ -583,28 +587,53 @@ footer p {
     margin-bottom: 1rem;
 }
 
-/* Mobile View */
+/* Mobile View (Max-width 768px) */
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
+        align-items: stretch; /* Ensure full width of sections */
     }
 
     .filter-section {
+        width: 100%; /* Make filter section full width */
+        border-right: none; /* Remove the border */
+        margin-bottom: 2rem; /* Add space between filter and products */
+    }
+
+    .product-section {
         width: 100%;
-        border-right: none;
-        margin-bottom: 2rem;
     }
 
     .product-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr); /* Two columns for medium screens */
+    }
+
+    .product-card {
+        padding: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slightly larger shadow on mobile */
     }
 }
 
+/* Very Small Screens (Max-width 480px) */
 @media (max-width: 480px) {
+    .container {
+        gap: 1rem; /* Reduce gap between sections */
+    }
+
     .product-grid {
-        grid-template-columns: 1fr; /* Single column on very small screens */
+        grid-template-columns: 1fr; /* Single column for very small screens */
+    }
+
+    .product-card img {
+        height: auto; /* Allow images to scale with the content */
+        max-height: 200px; /* Limit the image height */
+    }
+
+    .product-card {
+        padding: 0.8rem; /* Adjust card padding for very small screens */
     }
 }
+
 
 /* Preloader */
 .loader-mask {

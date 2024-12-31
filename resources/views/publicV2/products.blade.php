@@ -2,6 +2,8 @@
 <html lang="en">
 @include('publicLayoutsV2.head')
 <body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Make sure to include this -->
+
     <!-- Navbar Section -->
     @include('publicLayoutsV2.navbar')
 
