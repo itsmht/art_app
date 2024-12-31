@@ -28,7 +28,7 @@ class PublicController extends Controller
          $setting = Setting::first();
          $categories = Category::all();
          $products = Product::with('product_images')->paginate(9);
-         return view('public.home')->with('setting', $setting)->with('categories', $categories)->with('products', $products);
+         return view('publicV2.home')->with('setting', $setting)->with('categories', $categories)->with('products', $products);
      }
     
 
