@@ -22,7 +22,11 @@ Route::get('/cron', function () {
     \Artisan::call('request:change');
     return true;
 });
-
+Route::get('/sitemap.xml', function () {
+    return response()->file(public_path('sitemap.xml'), [
+        'Content-Type' => 'application/xml',
+    ]);
+});
 // Public Routes
 Route::group(['middleware' => ['track']], function () {
     Route::get('/', [PublicController::class, 'home'])->name('home');
