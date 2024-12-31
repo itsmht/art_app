@@ -16,7 +16,8 @@ body {
 button, .button, .button_primary, .button_secondary {
     appearance: none;
     background-color: #FFFFFF;
-    border-width: 0;
+    border: 1px solid #d9d9d9; /* Minimal border */
+    border-radius: 5px; /* Optional: adds slight rounding to the corners */
     box-sizing: border-box;
     color: #000000;
     cursor: pointer;
@@ -35,13 +36,17 @@ button, .button, .button_primary, .button_secondary {
     text-decoration: none;
     text-rendering: geometricprecision;
     text-transform: uppercase;
-    transition: opacity 300ms cubic-bezier(.694, 0, 0.335, 1), background-color 100ms cubic-bezier(.694, 0, 0.335, 1), color 100ms cubic-bezier(.694, 0, 0.335, 1);
+    transition: opacity 300ms cubic-bezier(.694, 0, 0.335, 1), 
+                background-color 100ms cubic-bezier(.694, 0, 0.335, 1), 
+                color 100ms cubic-bezier(.694, 0, 0.335, 1), 
+                border-color 100ms cubic-bezier(.694, 0, 0.335, 1); /* Smooth border transition */
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
     vertical-align: baseline;
     white-space: nowrap;
 }
+
 
 /* Styling for the before pseudo-element */
 button:before, .button:before, .button_primary:before, .button_secondary:before {
@@ -167,6 +172,76 @@ button:focus, .button:focus, .button_primary:focus, .button_secondary:focus {
     color: #333;
 }
 
+/* Navbar Buttons */
+.navbar .button {
+    appearance: none;
+    background-color: #FFFFFF;
+    border: 0px solid #d9d9d9; /* Minimal border */
+    border-radius: 5px; /* Optional: adds slight rounding to the corners */
+    box-sizing: border-box;
+    color: #000000;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Metropolis', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1rem 1.5rem;
+    transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+}
+button:before, .navbar .button:before, .navbar .button_primary:before, .navbar .button_secondary:before {
+    animation: opacityFallbackOut .5s step-end forwards;
+    backface-visibility: hidden;
+    background-color: #EBEBEB;
+    clip-path: polygon(-1% 0, 0 0, -25% 100%, -1% 100%);
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transform: translateZ(0);
+    transition: clip-path .5s cubic-bezier(.165, 0.84, 0.44, 1), -webkit-clip-path .5s cubic-bezier(.165, 0.84, 0.44, 1);
+    width: 100%;
+}
+
+/* Styling for hover effect on before pseudo-element */
+.navbar .button:hover:before, .navbar .button:hover:before, .navbar .button_primary:hover:before, .navbar .button_secondary:hover:before {
+    animation: opacityFallbackIn 0s step-start forwards;
+    clip-path: polygon(0 0, 101% 0, 101% 101%, 0 101%);
+}
+
+/* Styling for the after pseudo-element */
+.navbar .button:after, .navbar .button:after, .navbar .button_primary:after, .navbar .button_secondary:after {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: 'Metropolis', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Styling for the span inside buttons */
+.navbar .button span, .navbar .button span, .navbar .button_primary span, .navbar .button_secondary span {
+    z-index: 1;
+    position: relative;
+}
+
+/* Optional button states for primary and secondary buttons */
+.navbar .button_primary {
+    background-color: #1fa3ec;
+}
+
+.navbar .button_secondary {
+    background-color: #e98724;
+}
+
+/* Add button focus, hover, and active states */
+button:hover, .navbar .button:hover, .navbar .button_primary:hover, .navbar .button_secondary:hover {
+    opacity: 0.85;
+}
+
+
+
 /* Responsive Navbar */
 @media (max-width: 768px) {
     .nav-links {
@@ -193,24 +268,6 @@ button:focus, .button:focus, .button_primary:focus, .button_secondary:focus {
     }
 }
 
-
-/* Responsive Navbar */
-@media (max-width: 768px) {
-    .nav-links {
-        flex-direction: column;
-        width: 100%;
-        text-align: center;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background-color: #fff;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .menu-toggle {
-        display: block; /* Show menu toggle button */
-    }
-}
 
 /* Featured Products */
 .featured-products {
@@ -463,19 +520,44 @@ footer p {
 /* Products Section */
 .products {
     padding: 2rem;
-    text-align: center;
     background-color: #fff;
 }
 
-.products h2 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    color: #333;
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.filter-section {
+    width: 25%;
+    padding: 1rem;
+    border-right: 2px solid #ddd;
+}
+
+.filter-section h3 {
+    margin-bottom: 1rem;
+}
+
+.filter-category,
+.filter-price {
+    margin-bottom: 1rem;
+}
+
+.filter-category select,
+.filter-price select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.product-section {
+    width: 70%;
 }
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid layout */
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
 }
 
@@ -501,36 +583,26 @@ footer p {
     margin-bottom: 1rem;
 }
 
-
-
-/* Mobile View for Products Section */
+/* Mobile View */
 @media (max-width: 768px) {
-    .products h2 {
-        font-size: 1.5rem;
+    .container {
+        flex-direction: column;
+    }
+
+    .filter-section {
+        width: 100%;
+        border-right: none;
+        margin-bottom: 2rem;
     }
 
     .product-grid {
-        grid-template-columns: 1fr 1fr; /* 2 columns on smaller screens */
-        gap: 1.5rem;
+        grid-template-columns: repeat(2, 1fr);
     }
-
-    .product-card img {
-        height: 180px; /* Smaller image height on mobile */
-    }
-
 }
 
 @media (max-width: 480px) {
     .product-grid {
         grid-template-columns: 1fr; /* Single column on very small screens */
-    }
-
-    .product-card img {
-        height: 160px; /* Smaller image height for very small screens */
-    }
-
-    .product-card p {
-        font-size: 0.9rem; /* Smaller text size for small screens */
     }
 }
 
@@ -584,3 +656,163 @@ footer p {
         transform: scale(1);
     }
 }
+/* Product Page */
+.product-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.product-images {
+    flex: 1 1 300px;
+    max-width: 400px;
+    margin: 20px;
+    text-align: center;
+}
+
+.product-images img {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: auto;
+}
+
+.product-thumbnails {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.product-thumbnails img {
+    width: 60px;
+    height: 50px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+.product-thumbnails img:hover {
+    border-color: #007bff;
+}
+
+.product-info {
+    flex: 1 1 300px;
+    max-width: 400px;
+    margin: 20px;
+}
+
+.product-info h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.product-info p {
+    color: #555;
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+.price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .product-page {
+        padding: 10px;
+    }
+
+    .product-thumbnails img {
+        width: 50px;
+        height: 40px;
+    }
+
+    .product-info h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0; /* Initially invisible */
+    transition: opacity 0.3s ease-in-out; /* Smooth fade-in/out */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    transform: translateY(-50px); /* Start slightly off-screen */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-in-out; /* Smooth slide-in and fade-in */
+    opacity: 0; /* Initially invisible */
+}
+
+/* Modal Header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h5 {
+    margin: 0;
+}
+
+/* Close Button */
+.close-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Modal Footer */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+/* Form Fields */
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+

@@ -69,7 +69,7 @@ window.addEventListener('DOMContentLoaded', () => {
 $(window).on('load', function () {
     // Ensure the preloader hides after the page has loaded
     $('.loader').fadeOut(); // Fade out the loader animation
-    $('.loader-mask').delay(300).fadeOut('slow'); // Fade out the background mask
+    $('.loader-mask').delay(200).fadeOut('slow'); // Fade out the background mask
 });
 
 // Fallback in case the load event is delayed

@@ -43,7 +43,7 @@ class PublicController extends Controller
         $activeVisitors = count($cacheFiles);
         $categories = Category::all();
         $product = Product::where('product_id', $req->iden)->with('product_images')->first();
-        return view('public.productDetails')->with('setting', $setting)->with('categories', $categories)->with('product', $product)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
+        return view('publicV2.productDetails')->with('setting', $setting)->with('categories', $categories)->with('product', $product)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
     }
     function purchaseSubmit(Request $req)
     {
@@ -58,14 +58,14 @@ class PublicController extends Controller
         $product = Product::where('product_id', $product_id)->first();
         if($product->product_stock == 0)
         {
-            Alert::error('Error', 'Product is out of stock!');
+            session()->flash('error', 'Out of stock!');
             return back();
         }
         else
         {
             if($recentPurchase)
         {
-            Alert::error('Error', 'You have already requested for this product. Please wait for our call!');
+            session()->flash('error', 'You have already requested for this product. Please wait for our call!');
             return back();
         }
         else
@@ -86,50 +86,69 @@ class PublicController extends Controller
             $sms = new SMSController();
             $message = "Your order ID is ".$unique_id.". Please store this ID for future reference.";
             $sms->sms_send($req->purchase_phone,$message);
-            Alert::success('Successfull', 'Purchase Request Sent. Please Wait For Our Call!');
+            session()->flash('success', 'Purchase Request Sent. Please Wait For Our Call!');
             return back();
         }
         }
         
         
     }
-    function filter(Request $req)
+    function inventory()
     {
-        $totalVisitors = DB::table('visitor_counts')->count();
-        //$keys = Cache::getStore()->keys('active_visitor:*');
-        $cacheFiles = collect(Cache::getStore()->getDirectory())->filter(function ($file) {
-            return str_contains($file, 'active_visitor:');
-        });
-        $activeVisitors = count($cacheFiles);
         $setting = Setting::first();
         $categories = Category::all();
-        $category = Category::where('category_id', $req->iden)->first();
-        $products = Product::where('category_id', $req->iden)->with('product_images')->paginate(10);
-        return view('public.filter')->with('setting', $setting)->with('categories', $categories)->with('products', $products)->with('category', $category)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
+        $products = Product::with('product_images')->paginate(10);
+        return view('publicV2.products')->with('setting', $setting)->with('categories', $categories)->with('products', $products);
     }
+    function filter(Request $request)
+    {
+        $query = Product::query();
+
+        // Apply category filter
+        if ($request->has('category') && $request->category != '') {
+            $query->where('category_id', $request->category);
+        }
+    
+        // Apply price filter
+        if ($request->has('price') && $request->price != '') {
+            $priceRange = explode('-', $request->price);
+            $query->whereBetween('product_discounted_price', $priceRange);
+        }
+    
+        // Get filtered products with pagination
+        $products = $query->paginate(9);
+    
+        // Return the view with the filtered products and pagination
+        if ($request->ajax()) {
+            $view = view('publicV2._product_grid', compact('products'))->render();
+            $pagination = $products->links()->render();
+            return response()->json([
+                'products' => $view,
+                'pagination' => $pagination,
+            ]);
+        }
+    
+        return view('publicV2.products', compact('products'));
+    }
+    // function filter(Request $req)
+    // {
+    //     $setting = Setting::first();
+    //     $categories = Category::all();
+    //     $category = Category::where('category_id', $req->iden)->first();
+    //     $products = Product::where('category_id', $req->iden)->with('product_images')->paginate(10);
+    //     return view('public.filter')->with('setting', $setting)->with('categories', $categories)->with('products', $products)->with('category', $category);
+    // }
     function about()
     {
-        $totalVisitors = DB::table('visitor_counts')->count();
-        //$keys = Cache::getStore()->keys('active_visitor:*');
-        $cacheFiles = collect(Cache::getStore()->getDirectory())->filter(function ($file) {
-            return str_contains($file, 'active_visitor:');
-        });
-        $activeVisitors = count($cacheFiles);
         $setting = Setting::first();
         $categories = Category::all();
-        return view('public.about')->with('setting', $setting)->with('categories', $categories)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
+        return view('public.about')->with('setting', $setting)->with('categories', $categories);
     }
     function contact()
     {
-        $totalVisitors = DB::table('visitor_counts')->count();
-        //$keys = Cache::getStore()->keys('active_visitor:*');
-        $cacheFiles = collect(Cache::getStore()->getDirectory())->filter(function ($file) {
-            return str_contains($file, 'active_visitor:');
-        });
-        $activeVisitors = count($cacheFiles);
         $setting = Setting::first();
         $categories = Category::all();
-        return view('public.contact')->with('setting', $setting)->with('categories', $categories)->with('totalVisitors', $totalVisitors)->with('activeVisitors', $activeVisitors);
+        return view('public.contact')->with('setting', $setting)->with('categories', $categories);
     }
     function contactSubmit(Request $req)
     {
