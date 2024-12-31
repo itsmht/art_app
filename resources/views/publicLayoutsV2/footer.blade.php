@@ -17,9 +17,9 @@
             <p>&copy; 2020 - {{ date('Y') }} {{ $setting->name }}. All rights reserved. Made with ❤️ by Talha</p>
         </div>
         <div class="social-icon">
-            <a href="https://facebook.com" target="_blank" class="social-link"><i class="fa fa-facebook-official" aria-hidden="true"></i>
+            <a href="https://www.facebook.com/nnartistry.world" target="_blank" class="social-link"><i class="fa fa-facebook-official" aria-hidden="true"></i>
             </a>
-            <a href="https://instagram.com" target="_blank" class="social-link"><i class="fa fa-instagram" aria-hidden="true"></i>
+            <a href="https://www.instagram.com/nnartistry/" target="_blank" class="social-link"><i class="fa fa-instagram" aria-hidden="true"></i>
             </a>
         </div>
     </div>
