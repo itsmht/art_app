@@ -93,17 +93,28 @@ class PublicController extends Controller
         
         
     }
-    function inventory()
-    {
-        $setting = Setting::first();
-        $categories = Category::all();
-        $products = Product::with('product_images')->paginate(10);
-        return view('publicV2.products')->with('setting', $setting)->with('categories', $categories)->with('products', $products);
+    function inventory(Request $request)
+{
+    $setting = Setting::first();
+    $categories = Category::all();
+    
+    $query = Product::with('product_images');
+
+    // Apply category filter
+    if ($request->has('iden') && $request->iden != '') {
+        $query->where('category_id', $request->iden);
     }
+
+    // Get filtered or all products
+    $products = $query->paginate(10);
+
+    return view('publicV2.products', compact('setting', 'categories', 'products'));
+}
     function filter(Request $request)
     {
         $query = Product::query();
-
+        $setting = Setting::first();
+        $categories = Category::all();
         // Apply category filter
         if ($request->has('category') && $request->category != '') {
             $query->where('category_id', $request->category);
@@ -128,7 +139,7 @@ class PublicController extends Controller
             ]);
         }
     
-        return view('publicV2.products', compact('products'));
+        return view('publicV2.products', compact('setting', 'categories', 'products'));
     }
     // function filter(Request $req)
     // {
@@ -142,13 +153,14 @@ class PublicController extends Controller
     {
         $setting = Setting::first();
         $categories = Category::all();
-        return view('public.about')->with('setting', $setting)->with('categories', $categories);
+        return view('publicV2.about')->with('setting', $setting)->with('categories', $categories);
     }
     function contact()
     {
+        
         $setting = Setting::first();
         $categories = Category::all();
-        return view('public.contact')->with('setting', $setting)->with('categories', $categories);
+        return view('publicV2.contact')->with('setting', $setting)->with('categories', $categories);
     }
     function contactSubmit(Request $req)
     {
@@ -168,7 +180,7 @@ class PublicController extends Controller
         $contact->subject = $req->subject;
         $contact->message = $req->message;
         $contact->save();
-        Alert::success('Successfull', 'Message Sent Successfully!');
+        session()->flash('success', 'Sit tight! We will get back to you soon.');
         return back();
     }
     public function trackOrder(Request $request)

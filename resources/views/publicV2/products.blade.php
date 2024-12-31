@@ -102,5 +102,11 @@
             });
         });
     </script>
+    <script>
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('visible'); // Toggle the visible class
+        });
+    </script>
 </body>
 </html>

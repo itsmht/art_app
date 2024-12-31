@@ -31,7 +31,7 @@ Route::group(['middleware' => ['track']], function () {
     Route::get('about', [PublicController::class, 'about'])->name('about');
     Route::get('contact', [PublicController::class, 'contact'])->name('contact');
     Route::get('inventory', [PublicController::class, 'inventory'])->name('inventory');
-    Route::post('contactSubmit', [PublicController::class, 'contactSubmit'])->name('contactSubmit');
+    Route::post('contact-submit', [PublicController::class, 'contactSubmit'])->name('contact.submit');
     Route::post('/purchase.submit', [PublicController::class, 'purchaseSubmit'])->name('purchase.submit');
     Route::post('/track-order', [PublicController::class, 'trackOrder'])->name('trackOrder');
 });
